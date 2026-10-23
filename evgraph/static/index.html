@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OSINT Evidence Graph</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%235c7c99%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/base.css">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="logo" style="background:#5c7c99">EG</div>
+  <div><h1>OSINT Evidence Graph</h1><div class="sub">Observations with provenance. Conclusions with explained, adjustable confidence.</div></div>
+  <div class="spacer"></div>
+  <a class="btn ghost sm" href="/api/report.md" download="evidence-report.md">Report</a>
+  <button id="theme" class="ghost sm">◐ Theme</button>
+</header>
+<main>
+  <div class="grid cols-side">
+    <aside class="grid" style="align-content:start">
+      <section class="card">
+        <h2>Collect</h2>
+        <input id="domain" type="text" placeholder="example.com" spellcheck="false">
+        <label class="small"><input type="checkbox" id="fetchSite"> Also fetch the homepage (analytics IDs, links, redirects). Contacts the target.</label>
+        <div class="row" style="margin-top:8px"><button id="go">Investigate</button><button id="demo" class="ghost">Load demo</button></div>
+        <details style="margin-top:10px"><summary>Add an observation manually</summary>
+          <div class="row" style="margin-top:6px"><select id="mSt" style="width:auto"><option>domain</option><option>ip</option><option>organization</option><option>analytics_id</option><option>certificate</option><option>account</option></select><input id="mS" type="text" placeholder="subject"></div>
+          <input id="mP" type="text" placeholder="predicate, e.g. uses_analytics_id" style="margin-top:6px">
+          <div class="row" style="margin-top:6px"><select id="mOt" style="width:auto"><option>analytics_id</option><option>domain</option><option>ip</option><option>organization</option><option>nameserver</option><option>mailserver</option></select><input id="mO" type="text" placeholder="object"></div>
+          <input id="mSrc" type="text" placeholder="source (required)" style="margin-top:6px"><input id="mUrl" type="url" placeholder="source URL" style="margin-top:6px">
+          <div class="row" style="margin-top:6px"><select id="mRel"><option>A</option><option selected>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select><select id="mCred"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select><button id="mAdd" class="sm shrink">Add</button></div>
+        </details>
+        <details style="margin-top:8px"><summary>Import JSON lines</summary><textarea id="jsonl" placeholder='{"subject":["domain","a.example"],"predicate":"resolves_to","object":["ip","192.0.2.1"],"source":"pDNS","reliability":"B","credibility":2}'></textarea><button id="imp" class="ghost sm" style="margin-top:6px">Import</button></details>
+      </section>
+      <section class="card">
+        <h2>Reasoning settings</h2>
+        <label>Prior that two investigated domains share an operator: <b id="priorV"></b></label>
+        <input id="prior" type="range" min="0.01" max="0.5" step="0.01" style="width:100%;accent-color:var(--accent)">
+        <div id="rules" class="small" style="margin-top:8px"></div>
+        <div class="hint">Likelihood ratio (LR): how many times more likely the evidence is if the domains share an operator than if they don't. LR 1 means uninformative; LR below 1 counts against.</div>
+      </section>
+    </aside>
+    <div class="grid" style="align-content:start">
+      <div class="grid cols-4" id="stats"></div>
+      <section class="card">
+        <div class="row" style="margin-bottom:8px"><h2 style="margin:0">Graph</h2>
+          <label class="shrink small" style="margin:0"><input type="checkbox" id="showHyp" checked> Conclusions</label>
+          <label class="shrink small" style="margin:0"><input type="checkbox" id="hideBulk" checked> Hide bystanders on multi-tenant certificates <span id="hiddenN"></span></label></div>
+        <div id="cy" class="graph" style="height:560px"></div>
+        <div class="legend" id="legend"></div>
+        <div class="legend"><span>━ observation (a source said so)</span><span>┅ conclusion (computed; colour = posterior)</span></div>
+      </section>
+      <div class="grid cols-2">
+        <section class="card"><h2>Conclusions</h2><div id="hyps" class="scroll" style="max-height:520px"></div></section>
+        <section class="card"><h2>Detail</h2><div id="detail" class="small muted">Select a conclusion, entity or observation.</div></section>
+      </div>
+      <section class="card"><h2>Observations</h2><div id="obs" class="scroll"></div></section>
+    </div>
+  </div>
+</main>
+<script src="/static/vendor/cytoscape.min.js"></script>
+<script src="/static/base.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

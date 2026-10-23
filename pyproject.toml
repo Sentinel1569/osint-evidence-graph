@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "evgraph"
+version = "1.0.0"
+description = "OSINT Evidence Graph with confidence scoring: every relationship has a source, timestamp, confidence and explanation; conclusions are Bayesian hypotheses, never stored facts."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = ["fastapi>=0.110", "uvicorn>=0.29", "httpx>=0.27"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+evgraph = "evgraph.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["evgraph*"]
+
+[tool.setuptools.package-data]
+evgraph = ["static/*", "static/vendor/*", "static/vendor/images/*", "data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore:.*httpx.*"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["B008", "B905", "E501"]

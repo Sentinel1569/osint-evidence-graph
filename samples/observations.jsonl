@@ -1,0 +1,3 @@
+{"subject": ["domain", "acme-shop.example"], "predicate": "resolves_to", "object": ["ip", "198.51.100.10"], "source": "Passive DNS export", "reliability": "B", "credibility": 2, "explanation": "Seen 2025-01-01 to 2026-10-01", "observed_at": "2026-10-01"}
+{"subject": ["domain", "acme-archive.example"], "predicate": "resolves_to", "object": ["ip", "198.51.100.10"], "source": "Passive DNS export", "reliability": "B", "credibility": 2, "explanation": "Seen 2024-03-01 to 2024-09-30"}
+{"subject": ["domain", "acme-archive.example"], "predicate": "uses_analytics_id", "object": ["analytics_id", "G-ACME12345"], "source": "Wayback Machine capture 2024-05-02", "url": "https://web.archive.org/", "reliability": "A", "credibility": 2}

@@ -1,0 +1,9 @@
+.h { padding: 9px 4px; border-bottom: 1px solid var(--border); cursor: pointer; }
+.h:hover, .h.active { background: var(--panel-2); }
+.post { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.wf text { font-size: 11px; fill: var(--text); }
+.wf .axis { stroke: var(--border); }
+.f { display: grid; grid-template-columns: 1fr 64px; gap: 8px; border-top: 1px solid var(--border); padding: 6px 0; }
+.st-accepted { color: var(--ok); } .st-rejected { color: var(--bad); } .st-open { color: var(--muted); }
+.rule { display: grid; grid-template-columns: 1fr 70px; gap: 6px; align-items: center; padding: 3px 0; }
+.rule input { padding: 3px 6px; }
